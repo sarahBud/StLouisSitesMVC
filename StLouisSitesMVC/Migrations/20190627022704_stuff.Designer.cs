@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StLouisSitesMVC.Data;
 
-namespace StLouisSitesMVC.Data.Migrations
+namespace StLouisSitesMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20190610011521_Description")]
-    partial class Description
+    [Migration("20190627022704_stuff")]
+    partial class stuff
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -192,6 +192,8 @@ namespace StLouisSitesMVC.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Address");
+
                     b.Property<string>("Description");
 
                     b.Property<string>("Name");
@@ -199,6 +201,25 @@ namespace StLouisSitesMVC.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("StLouisSitesMVC.Models.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comment");
+
+                    b.Property<int?>("LocationId");
+
+                    b.Property<int>("Rating");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Reviews");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -244,6 +265,13 @@ namespace StLouisSitesMVC.Data.Migrations
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("StLouisSitesMVC.Models.Review", b =>
+                {
+                    b.HasOne("StLouisSitesMVC.Models.Location")
+                        .WithMany("Reviews")
+                        .HasForeignKey("LocationId");
                 });
 #pragma warning restore 612, 618
         }

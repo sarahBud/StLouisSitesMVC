@@ -1,0 +1,57 @@
+﻿@model StLouisSitesMVC.Models.Location
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Location</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+    </dl>
+</div>
+<div>
+    <div>
+        <dl>
+            <dt>Reviews</dt>
+            @foreach (var Review in Model.Reviews)
+            {
+                <dd>
+                    <a asp-controller="RatingAndReview" asp-action="Edit" asp-route-ID="@Review.Id" class="btn btn-primary">Edit</a> |
+                    <a asp-controller="RatingAndR" asp-action="Delete" asp-route-ID="@Review.Id" class="btn btn-danger">Delete</a>
+                    <br />
+                    
+
+
+                    <hr>
+
+
+
+                </dd>
+            }
+        </dl>
+
+        <a asp-controller="Reviews" asp-action="Create" asp-route-id="@Model.Id" class="btn btn-primary">Write a Review</a>
+    </div>
+    <a asp-action="Index">Back to List</a>
+</div>

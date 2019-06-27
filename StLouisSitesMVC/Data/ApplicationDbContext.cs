@@ -9,7 +9,12 @@ namespace StLouisSitesMVC.Data
 {
     public class ApplicationDbContext : IdentityDbContext
     {
+        
+
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Review> Reviews { get; set; }
+        
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
