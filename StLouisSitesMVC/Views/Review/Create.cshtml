@@ -17,11 +17,11 @@
                 <input hidden asp-for="LocationID" class="form-control" />
                 <span asp-validation-for="LocationID" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="LocationName" class="control-label">Location Name</label>
-                <input readonly asp-for="LocationName" class="form-control" />
+                <input hidden asp-for="LocationName" class="form-control" />
                 <span asp-validation-for="LocationName" class="text-danger"></span>
-            </div>
+            </div>*@
             <div class="form-group">
                 <label asp-for="Rating" class="control-label"></label>
                 <select asp-for="Rating">
