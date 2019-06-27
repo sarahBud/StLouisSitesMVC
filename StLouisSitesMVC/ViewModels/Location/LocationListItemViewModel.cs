@@ -10,29 +10,41 @@ namespace StLouisSitesMVC.ViewModels.Location
 {
     public class LocationListItemViewModel
     {
-        private Models.Location m;
-
-        public LocationListItemViewModel(Models.Location m)
+        public static List<LocationListItemViewModel> GetLocationListItemViewModel(ApplicationDbContext context)
         {
-            this.m = m;
-        }
-
-        public static List<LocationListItemViewModel> GetLocations(ApplicationDbContext context)
-        {
-            return context.Locations
-                //.Include(m => m.Ratings)
-                
-                .Select(m => new LocationListItemViewModel(m))
+            List<Models.Location> locations = context.Locations
+                .Include(l => l.Reviews)
                 .ToList();
+
+
+            List<LocationListItemViewModel> viewModelLocations = new List<LocationListItemViewModel>();
+            foreach (Models.Location location in locations)
+            {
+                LocationListItemViewModel viewModel = new LocationListItemViewModel();
+                viewModel.Id = location.Id;
+                viewModel.Name = location.Name;
+                viewModel.Description = location.Description;
+                viewModel.Reviews = location.Reviews;
+                viewModel.AverageRating = location.Reviews.Count > 0 ? Math.Round(location.Reviews.Average(x => x.Rating), 2).ToString() : "n/a";
+
+                viewModelLocations.Add(viewModel);
+
+            }
+            return viewModelLocations;
+
+
         }
 
+        private ApplicationDbContext context;
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public double AverageRating { get; set; }
-       
+        public List<Models.Review> Reviews { get; set; }
+        public string AverageRating { get; set; }
 
-     
 
-        }
+
+
+    }
     }
 

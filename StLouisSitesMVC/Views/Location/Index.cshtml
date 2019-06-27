@@ -1,53 +1,54 @@
-﻿@model IEnumerable<StLouisSitesMVC.Models.Location>
+﻿@model IEnumerable<StLouisSitesMVC.ViewModels.Location.LocationListItemViewModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Locations";
 }
 
-<h1>Index</h1>
+<h1>Locations</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Add a new location</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-            @Html.DisplayNameFor(model => model.Id)
-        </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Address)
+                Location
+                @*@Html.DisplayNameFor(model => model.Name)*@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
-            <th></th>
+            <th>
+                Average Rating
+            </th>
+
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-            @Html.DisplayFor(modelItem => item.Id)
-        </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <a asp-controller="Location" asp-action="Details" asp-route-ID="@item.Id">@item.Name</a>
+                    @*@Html.DisplayFor(modelItem => item.Name)*@
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AverageRating)
+                </td>
+                <td>
+                <td><a asp-controller="Review" asp-action="Create" asp-route-locationID="@item.Id">Rate/Review</a></td>
+                <td>
+                    |
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

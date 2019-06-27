@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StLouisSitesMVC.Data;
 using StLouisSitesMVC.Models;
+using StLouisSitesMVC.ViewModels.Location;
 
 namespace StLouisSitesMVC.Controllers
 {
@@ -20,10 +21,8 @@ namespace StLouisSitesMVC.Controllers
 
         public IActionResult Index()
         {
-            List<Location> locations = context.Locations.ToList();
-            
-            return View(locations);
-            
+            List<LocationListItemViewModel> viewModelLocations = LocationListItemViewModel.GetLocationListItemViewModel(context);
+            return View(viewModelLocations);
         }
 
         [HttpGet]
@@ -31,107 +30,41 @@ namespace StLouisSitesMVC.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public IActionResult Create(LocationCreateViewModel locationViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(locationViewModel);
+            }
+
+            int ID = LocationCreateViewModel.CreateLocation(context, locationViewModel);
+
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        public IActionResult Details(int id)
+        {
+
+            LocationDetailsViewModel locationDetailsViewModel = LocationDetailsViewModel.GetLocationDetailsViewModel(context, id);
+            return View(locationDetailsViewModel);
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            return View(model: new LocationEditViewModel(id, context));
+        }
 
         [HttpPost]
-        public IActionResult Create(Location location)
+        public IActionResult Edit(LocationEditViewModel locationEditViewModel, int id)
         {
-            context.Add(location);
-            context.SaveChanges();
-            return RedirectToAction(nameof(Index));
-        }
-
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return View(new LocationEditViewModel());
             }
-
-            var location = await context.Locations.FindAsync(id);
-            if (location == null)
-            {
-                return NotFound();
-            }
-            return View(location);
-        }
-
-        [HttpPost]
-      public async Task<IActionResult> Edit(int id, Location location)
-        {
-            if (id != location.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    context.Update(location);
-                    await context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!LocationExists(location.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(location);
-        }
-
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var location = await context.Locations
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (location == null)
-            {
-                return NotFound();
-            }
-
-            return View(location);
-        }
-
-        private bool LocationExists(int id)
-        {
-            return context.Locations.Any(e => e.Id == id);
-        }
-
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var location = await context.Locations
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (location == null)
-            {
-                return NotFound();
-            }
-
-            return View(location);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var location = await context.Locations.FindAsync(id);
-            context.Locations.Remove(location);
-            await context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            locationEditViewModel.Persist(id, context);
+            return RedirectToAction(actionName: nameof(Index));
         }
 
     }

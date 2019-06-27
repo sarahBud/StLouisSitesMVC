@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StLouisSitesMVC.Data;
 
 namespace StLouisSitesMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190627133435_county2")]
+    partial class county2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -211,13 +213,13 @@ namespace StLouisSitesMVC.Migrations
 
                     b.Property<string>("Comment");
 
-                    b.Property<int>("LocationID");
+                    b.Property<int?>("LocationId");
 
                     b.Property<int>("Rating");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LocationID");
+                    b.HasIndex("LocationId");
 
                     b.ToTable("Reviews");
                 });
@@ -269,10 +271,9 @@ namespace StLouisSitesMVC.Migrations
 
             modelBuilder.Entity("StLouisSitesMVC.Models.Review", b =>
                 {
-                    b.HasOne("StLouisSitesMVC.Models.Location", "Location")
+                    b.HasOne("StLouisSitesMVC.Models.Location")
                         .WithMany("Reviews")
-                        .HasForeignKey("LocationID")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("LocationId");
                 });
 #pragma warning restore 612, 618
         }

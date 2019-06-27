@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StLouisSitesMVC.Data;
 using StLouisSitesMVC.Models;
-using StLouisSitesMVC.ViewModels.RatingAndReview;
+using StLouisSitesMVC.ViewModels.Review;
 
 namespace StLouisSitesMVC.Controllers
 {
     public class ReviewController : Controller
     {
-        private readonly ApplicationDbContext context;
+        private ApplicationDbContext context;
 
         public ReviewController(ApplicationDbContext context)
         {
@@ -20,25 +20,19 @@ namespace StLouisSitesMVC.Controllers
 
         public IActionResult Index()
         {
-            List<Review> ratings = context.Reviews.ToList();
-            return View(ratings);
+            return View();
         }
-
-
-        public IActionResult Create(int? id)
+        [HttpGet]
+        public IActionResult Create(int locationID)
         {
-            ViewData["LocationCreate"] = context.Locations.SingleOrDefault(M => M.Id == id);
-            return View(); ;
+            return View();
         }
-
         [HttpPost]
-        public IActionResult Create(int Id, RatingAndReviewCreateViewModel model)
+        public IActionResult Create(ReviewCreateViewModel reviewCreateViewModel)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            int Id = ReviewCreateViewModel.GetReviewViewModel(context, reviewCreateViewModel);
 
-            model.Persist(context);
-            return RedirectToAction(controllerName: "Location", actionName: "Index");
+            return RedirectToAction(controllerName: nameof(Location), actionName: nameof(Index));
         }
 
     }
