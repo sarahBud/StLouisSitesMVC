@@ -19,7 +19,9 @@ namespace StLouisSitesMVC.ViewModels.Location
         [MinLength(3)]
         [MaxLength(300)]
         public string Description { get; set; }
+        [Required(ErrorMessage ="Enter an address!")]
         public string Address { get; set; }
+        [Required(ErrorMessage ="You must select a county!")]
         public string County { get; private set; }
 
         public static int CreateLocation(ApplicationDbContext context, LocationCreateViewModel locationViewModel)
