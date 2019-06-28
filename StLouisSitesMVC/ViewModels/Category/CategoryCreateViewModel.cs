@@ -9,6 +9,7 @@ namespace StLouisSitesMVC.ViewModels.Category
     public class CategoryCreateViewModel
     {
         [Required(ErrorMessage = "You must enter a category!!!")]
+        [Display(Name = "Category Name")]
         public string Name { get; set; }
     }
 }

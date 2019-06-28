@@ -24,6 +24,7 @@ namespace StLouisSitesMVC.ViewModels.Location
                 viewModel.Id = location.Id;
                 viewModel.Name = location.Name;
                 viewModel.Description = location.Description;
+                //viewModel.CategoryNames = GetCategoryNames(location, context);
                 viewModel.Reviews = location.Reviews;
                 viewModel.AverageRating = location.Reviews.Count > 0 ? Math.Round(location.Reviews.Average(x => x.Rating), 2).ToString() : "n/a";
 
@@ -35,10 +36,25 @@ namespace StLouisSitesMVC.ViewModels.Location
 
         }
 
+        //private static string GetCategoryNames(Models.Location location, ApplicationDbContext context)
+        //{
+        //    //List<string> categoryNames = location.LocationCategories
+        //    //    .Select(lc => lc.Category)
+        //    //    .Select(c => c.CategoryName)
+        //    //    .ToList();
+
+        //    List<int> categoryIds = location.LocationCategories.Select(lc => lc.CategoryId).ToList();
+        //    List<Category> categories = context.Categories.Where(c => categoryIds.Contains(c.Id)).ToList();
+        //    categoryNames = categories.Select(c => c.CategoryName).ToList();
+
+        //    return String.Join(", ", categoryNames);
+        //}
+
         private ApplicationDbContext context;
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public string CategoryNames { get; set; }
         public List<Models.Review> Reviews { get; set; }
         public string AverageRating { get; set; }
 
