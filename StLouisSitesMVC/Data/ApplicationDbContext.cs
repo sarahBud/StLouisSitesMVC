@@ -13,6 +13,8 @@ namespace StLouisSitesMVC.Data
 
         public DbSet<Location> Locations { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Category> Categories { get; set; }
+        public DbSet<LocationCategory> LocationCategories { get; set; }
         
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)

@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using StLouisSitesMVC.Data;
 
 namespace StLouisSitesMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190627185257_category2")]
+    partial class category2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -192,9 +194,13 @@ namespace StLouisSitesMVC.Migrations
 
                     b.Property<string>("CategoryName");
 
+                    b.Property<int?>("LocationId");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.HasIndex("LocationId");
+
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("StLouisSitesMVC.Models.Location", b =>
@@ -214,25 +220,6 @@ namespace StLouisSitesMVC.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Locations");
-                });
-
-            modelBuilder.Entity("StLouisSitesMVC.Models.LocationCategory", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CategoryId");
-
-                    b.Property<int>("LocationId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CategoryId");
-
-                    b.HasIndex("LocationId");
-
-                    b.ToTable("LocationCategories");
                 });
 
             modelBuilder.Entity("StLouisSitesMVC.Models.Review", b =>
@@ -299,17 +286,11 @@ namespace StLouisSitesMVC.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("StLouisSitesMVC.Models.LocationCategory", b =>
+            modelBuilder.Entity("StLouisSitesMVC.Models.Category", b =>
                 {
-                    b.HasOne("StLouisSitesMVC.Models.Category", "Category")
-                        .WithMany("LocationCategories")
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("StLouisSitesMVC.Models.Location", "Location")
-                        .WithMany("LocationCategories")
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.HasOne("StLouisSitesMVC.Models.Location")
+                        .WithMany("Categories")
+                        .HasForeignKey("LocationId");
                 });
 
             modelBuilder.Entity("StLouisSitesMVC.Models.Review", b =>

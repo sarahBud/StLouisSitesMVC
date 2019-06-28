@@ -14,6 +14,7 @@ namespace StLouisSitesMVC.Models
         public string County { get; set; }
 
         public List<Review> Reviews { get; set; }
+        public List<LocationCategory> LocationCategories { get; set; }
        
         
 
