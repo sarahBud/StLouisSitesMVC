@@ -11,15 +11,15 @@ namespace StLouisSitesMVC.ViewModels.Location
     {
         private ApplicationDbContext context;
         public int Id { get; set; }
-        [Required(ErrorMessage ="Please enter a location name")]
+        [Required(ErrorMessage ="You must enter a location name!")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Description must be between 2 and 200 characters.")]
         [MinLength(2)]
         [MaxLength(200)]
         public string Description { get; set; }
-        [Required(ErrorMessage ="Please enter an address")]
+        [Required(ErrorMessage ="Please enter an address!")]
         public string Address { get; set; }
-        [Required]
+        [Required(ErrorMessage ="You must select a county!")]
         public string County { get; set; }
 
         public LocationEditViewModel() { }

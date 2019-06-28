@@ -16,7 +16,7 @@ namespace StLouisSitesMVC.ViewModels.Location
         public string Name { get; set; }
 
         [Required(ErrorMessage ="Description must be between 2 and 300 characters")]
-        [MinLength(3)]
+        [MinLength(2)]
         [MaxLength(300)]
         public string Description { get; set; }
         [Required(ErrorMessage ="Enter an address!")]
