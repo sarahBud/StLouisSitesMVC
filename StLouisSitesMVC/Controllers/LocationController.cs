@@ -25,6 +25,7 @@ namespace StLouisSitesMVC.Controllers
             return View(viewModelLocations);
         }
 
+
         [HttpGet]
         public IActionResult Create()
         {

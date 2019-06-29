@@ -10,5 +10,8 @@ namespace StLouisSitesMVC.Models
         public int Id { get; set; }
         public string CategoryName { get; set; }
         public List<LocationCategory> LocationCategories { get; set; }
+
+
+        public bool CheckboxAnswer { get; set; }
     }
 }

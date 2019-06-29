@@ -18,9 +18,13 @@ namespace StLouisSitesMVC.Controllers
             context = dbContext;
         }
 
+
+        [HttpGet]
         public IActionResult Index()
         {
-            List<Category> categories = context.Categories.ToList();
+            List<Category> categories = new List<Category>();
+
+            categories = (from category in context.Categories select category).ToList();
             return View(categories);
         }
 
@@ -43,7 +47,7 @@ namespace StLouisSitesMVC.Controllers
                 context.Categories.Add(newCategory);
                 context.SaveChanges();
 
-                return Redirect("/Category");
+                return Redirect("/Location/Index");
             }
             return View(categoryCreateViewModel);
         }
