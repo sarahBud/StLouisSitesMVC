@@ -23,7 +23,7 @@ namespace StLouisSitesMVC.ViewModels.Location
         [Required(ErrorMessage ="You must select a county!")]
         public string County { get; set; }
         public List<int> CategoryIds { get; set; }
-        public List<Category> Categories { get; set; }
+        public List<LocationCategoriesCreateViewModel> Categories { get; set; }
 
         public LocationEditViewModel() { }
 
@@ -38,8 +38,24 @@ namespace StLouisSitesMVC.ViewModels.Location
             Address = location.Address;
             County = location.County;
 
+            this.Categories = context.Categories.Select(category => new LocationCategoriesCreateViewModel
+            {
+                CategoryName = category.CategoryName,
+                Id = category.Id
+
+            }).ToList();
+
         }
 
+        //public LocationEditViewModel(int id, ApplicationDbContext context)
+        //{
+        //    this.Categories = context.Categories.Select(category => new LocationCategoriesCreateViewModel
+        //    {
+        //        CategoryName = category.CategoryName,
+        //        Id = category.Id
+
+        //    }).ToList();
+        //}
 
         public void Persist(int id, ApplicationDbContext context)
         {
@@ -60,7 +76,8 @@ namespace StLouisSitesMVC.ViewModels.Location
 
         private List<LocationCategory> CreateManyToManyRelationships(int locationId)
         {
-            return CategoryIds.Select(catId => new LocationCategory { LocationId = locationId, CategoryId = catId }).ToList();
+            return Categories.Where(cat => cat.Selected)
+                .Select(cat => new LocationCategory { LocationId = locationId, CategoryId = cat.Id }).ToList();
         }
     }
 }

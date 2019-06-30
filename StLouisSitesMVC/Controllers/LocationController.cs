@@ -52,6 +52,7 @@ namespace StLouisSitesMVC.Controllers
             LocationDetailsViewModel locationDetailsViewModel = LocationDetailsViewModel.GetLocationDetailsViewModel(context, id);
             return View(locationDetailsViewModel);
         }
+
         //[HttpGet]
         //public IActionResult Edit(int id)
         //{
@@ -70,7 +71,7 @@ namespace StLouisSitesMVC.Controllers
         //}
 
         [HttpGet]
-        public IActionResult Edit(int id, ApplicationDbContext context)
+        public IActionResult Edit(int id)
         {
             return View(new LocationEditViewModel(id, context));
         }
@@ -80,7 +81,7 @@ namespace StLouisSitesMVC.Controllers
         {
             if (!ModelState.IsValid)
             {
-                
+
                 return View(location);
             }
 

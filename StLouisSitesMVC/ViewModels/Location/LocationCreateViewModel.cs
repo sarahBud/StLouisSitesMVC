@@ -14,6 +14,7 @@ namespace StLouisSitesMVC.ViewModels.Location
 
     public class LocationCreateViewModel
     {
+
         [Required(ErrorMessage ="You must enter a name!!!")]
         public string Name { get; set; }
 

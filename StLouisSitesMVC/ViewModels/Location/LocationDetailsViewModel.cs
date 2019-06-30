@@ -1,5 +1,6 @@
 ﻿using StLouisSitesMVC.Data;
 using StLouisSitesMVC.ViewModels.Review;
+using StLouisSitesMVC.ViewModels.Categories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace StLouisSitesMVC.ViewModels.Location
         public string Name { get; set; }
         public string Description { get; set; }
         public List<ReviewDetailsViewModel> ReviewDetailsViewModels { get; set; }
+        public List<CategoryDetailsViewModel> CategoryDetailsViewModels { get; set; }
 
         public static LocationDetailsViewModel GetLocationDetailsViewModel(ApplicationDbContext context, int id)
         {
@@ -26,6 +28,10 @@ namespace StLouisSitesMVC.ViewModels.Location
             .Where(r => r.LocationID == id)
             .ToList();
 
+            List<Models.Category> categories = context.Categories
+            .Where(c => c.LocationId == id)
+            .ToList();
+
             List<ReviewDetailsViewModel> reviewDetailsViewModels = new List<ReviewDetailsViewModel>();
             foreach (Models.Review review in reviews)
             {
@@ -33,6 +39,15 @@ namespace StLouisSitesMVC.ViewModels.Location
                 reviewDetailsViewModel.Rating = review.Rating;
                 reviewDetailsViewModel.Comment = review.Comment;
                 reviewDetailsViewModels.Add(reviewDetailsViewModel);
+
+            }
+
+            List<CategoryDetailsViewModel> categoryDetailsViewModels = new List<CategoryDetailsViewModel>();
+            foreach (Models.Category category in categories)
+            {
+                CategoryDetailsViewModel categoryDetailsViewModel = new CategoryDetailsViewModel();
+                categoryDetailsViewModel.Name = category.CategoryName;
+                categoryDetailsViewModels.Add(categoryDetailsViewModel);
 
             }
 
