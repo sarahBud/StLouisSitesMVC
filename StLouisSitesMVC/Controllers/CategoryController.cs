@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using StLouisSitesMVC.Data;
 using StLouisSitesMVC.Models;
-using StLouisSitesMVC.ViewModels.Category;
+using StLouisSitesMVC.ViewModels.Categories;
+
 
 namespace StLouisSitesMVC.Controllers
 {

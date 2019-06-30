@@ -43,11 +43,32 @@
                 </select>
                 <span asp-validation-for="County" class="text-danger"></span>
             </div>
+            @*<div class="form-group">
+            <label asp-for="CategoryIds" class="control-label"></label>
+            @foreach (var category in Model.Categories)
+            {
+                <label>@category.CategoryName</label>
+                <input type="checkbox" name="CategoryIds" value="@category.Id" />
+            }
+        </div>*@
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <ul>
+                    @for (var i = 0; i < Model.Categories.Count; i++)
+                    {
+                        <li>
+                            <input type="checkbox" asp-for="@Model.Categories[i].Selected" />
+                            <label asp-for="@Model.Categories[i].Selected">@Model.Categories[i].CategoryName</label>
+                            <input type="hidden" asp-for="@Model.Categories[i].Id" />
+                            <input type="hidden" asp-for="@Model.Categories[i].CategoryName" />
+                        </li>
+                    }
+                </ul>
             </div>
-        </form>
-    </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+</form>
+</div>
 </div>
 
 <div>

@@ -1,4 +1,5 @@
 ﻿using StLouisSitesMVC.Data;
+using StLouisSitesMVC.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -21,6 +22,8 @@ namespace StLouisSitesMVC.ViewModels.Location
         public string Address { get; set; }
         [Required(ErrorMessage ="You must select a county!")]
         public string County { get; set; }
+        public List<int> CategoryIds { get; set; }
+        public List<Category> Categories { get; set; }
 
         public LocationEditViewModel() { }
 
@@ -49,8 +52,15 @@ namespace StLouisSitesMVC.ViewModels.Location
                 County = this.County
             };
             context.Update(location);
+            List<LocationCategory> locationCategories = CreateManyToManyRelationships(location.Id);
+            location.LocationCategories = locationCategories;
             context.SaveChanges();
 
+        }
+
+        private List<LocationCategory> CreateManyToManyRelationships(int locationId)
+        {
+            return CategoryIds.Select(catId => new LocationCategory { LocationId = locationId, CategoryId = catId }).ToList();
         }
     }
 }

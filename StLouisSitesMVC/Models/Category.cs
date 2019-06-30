@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace StLouisSitesMVC.Models
 {
-    public class Category
+    public class Category : IModel
     {
         public int Id { get; set; }
+        public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public List<LocationCategory> LocationCategories { get; set; }
 

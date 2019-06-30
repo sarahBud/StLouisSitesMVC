@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StLouisSitesMVC.Models
 {
-    public class Review
+    public class Review : IModel
     {
         public int Id { get; set; }
         public int Rating { get; set; }

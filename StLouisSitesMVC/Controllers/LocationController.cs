@@ -25,25 +25,26 @@ namespace StLouisSitesMVC.Controllers
             return View(viewModelLocations);
         }
 
-
         [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            LocationCreateViewModel model = new LocationCreateViewModel(context);
+            return View(model);
         }
+
         [HttpPost]
-        public IActionResult Create(LocationCreateViewModel locationViewModel)
+        public IActionResult Create(LocationCreateViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View(locationViewModel);
+                
+                return View(model);
             }
 
-            int ID = LocationCreateViewModel.CreateLocation(context, locationViewModel);
-
-            return RedirectToAction(nameof(Index));
-
+            model.Persist(context);
+            return RedirectToAction(actionName: nameof(Index));
         }
+       
 
         public IActionResult Details(int id)
         {
@@ -51,20 +52,39 @@ namespace StLouisSitesMVC.Controllers
             LocationDetailsViewModel locationDetailsViewModel = LocationDetailsViewModel.GetLocationDetailsViewModel(context, id);
             return View(locationDetailsViewModel);
         }
+        //[HttpGet]
+        //public IActionResult Edit(int id)
+        //{
+        //    return View(model: new LocationEditViewModel(id, context));
+        //}
+
+        //[HttpPost]
+        //public IActionResult Edit(LocationEditViewModel locationEditViewModel, int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(new LocationEditViewModel());
+        //    }
+        //    locationEditViewModel.Persist(id, context);
+        //    return RedirectToAction(actionName: nameof(Index));
+        //}
+
         [HttpGet]
-        public IActionResult Edit(int id)
+        public IActionResult Edit(int id, ApplicationDbContext context)
         {
-            return View(model: new LocationEditViewModel(id, context));
+            return View(new LocationEditViewModel(id, context));
         }
 
         [HttpPost]
-        public IActionResult Edit(LocationEditViewModel locationEditViewModel, int id)
+        public IActionResult Edit(int id, LocationEditViewModel location)
         {
             if (!ModelState.IsValid)
             {
-                return View(new LocationEditViewModel());
+                
+                return View(location);
             }
-            locationEditViewModel.Persist(id, context);
+
+            location.Persist(id, context);
             return RedirectToAction(actionName: nameof(Index));
         }
 

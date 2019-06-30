@@ -43,6 +43,21 @@
                 <span asp-validation-for="County" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="CategoryIds" class="control-label"></label>
+                @foreach (var category in Model.Categories)
+                {
+                    <label>@category.CategoryName</label>
+                    @if (Model.CategoryIds.Contains(category.Id))
+                    {
+                        <input type="checkbox" asp-for="CategoryIds" value="@category.Id" checked />
+                    }
+                    else
+                    {
+                        <input type="checkbox" asp-for="CategoryIds" value="@category.Id" />
+                    }
+                }
+            </div>
+            <div class="form-group">
                 <button type="submit" value="Save" class="btn btn-primary">Submit</button>
             </div>
         </form>

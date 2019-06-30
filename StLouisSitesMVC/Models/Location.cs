@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace StLouisSitesMVC.Models
 {
-    public class Location
+    public class Location : IModel
     {
         public int Id { get; set; }
         public string Name { get; set; }
