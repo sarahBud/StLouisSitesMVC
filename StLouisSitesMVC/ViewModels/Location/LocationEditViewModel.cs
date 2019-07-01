@@ -38,10 +38,13 @@ namespace StLouisSitesMVC.ViewModels.Location
             Address = location.Address;
             County = location.County;
 
+            var selectedCategories = context.LocationCategories.Where(locationCategory => locationCategory.LocationId == id);
+
             this.Categories = context.Categories.Select(category => new LocationCategoriesCreateViewModel
             {
                 CategoryName = category.CategoryName,
-                Id = category.Id
+                Id = category.Id,
+                Selected = selectedCategories.Any(selectedCategory => selectedCategory.CategoryId == category.Id)
 
             }).ToList();
 
@@ -70,6 +73,9 @@ namespace StLouisSitesMVC.ViewModels.Location
             context.Update(location);
             List<LocationCategory> locationCategories = CreateManyToManyRelationships(location.Id);
             location.LocationCategories = locationCategories;
+            var locationCategoriesToDelete = context.LocationCategories.Where(lc => lc.LocationId == id);
+            context.RemoveRange(locationCategoriesToDelete);
+
             context.SaveChanges();
 
         }

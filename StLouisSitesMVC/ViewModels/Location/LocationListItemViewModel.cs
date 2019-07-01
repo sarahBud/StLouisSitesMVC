@@ -25,7 +25,7 @@ namespace StLouisSitesMVC.ViewModels.Location
                 viewModel.Name = location.Name;
                 viewModel.Description = location.Description;
                 //viewModel.CategoryNames = GetCategoryNames(location, context);
-                viewModel.Reviews = location.Reviews;
+                viewModel.Reviews = location.Reviews.ToList();
                 viewModel.AverageRating = location.Reviews.Count > 0 ? Math.Round(location.Reviews.Average(x => x.Rating), 2).ToString() : "n/a";
 
                 viewModelLocations.Add(viewModel);

@@ -22,11 +22,6 @@ namespace StLouisSitesMVC.Data
         {
         }
 
-        //protected override void OnModelCreating(ModelBuilder builder)
-        //{
-        //    builder.Entity<Location>()
-        //        .HasIndex(u => u.Name)
-        //        .IsUnique();
-        //}
+        
     }
 }

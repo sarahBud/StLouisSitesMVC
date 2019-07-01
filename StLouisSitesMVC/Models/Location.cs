@@ -13,8 +13,8 @@ namespace StLouisSitesMVC.Models
         public string Address { get; set; }
         public string County { get; set; }
 
-        public List<Review> Reviews { get; set; }
-        public List<LocationCategory> LocationCategories { get; set; }
+        public IList<Review> Reviews { get; set; }
+        public IList<LocationCategory> LocationCategories { get; set; }
        
         
 
