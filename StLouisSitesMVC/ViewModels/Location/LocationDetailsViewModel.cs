@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using StLouisSitesMVC.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace StLouisSitesMVC.ViewModels.Location
 {
@@ -14,21 +16,29 @@ namespace StLouisSitesMVC.ViewModels.Location
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public List<LocationCategory> LocationCategories { get; set;}
         public List<ReviewDetailsViewModel> ReviewDetailsViewModels { get; set; }
         public List<CategoryDetailsViewModel> CategoryDetailsViewModels { get; set; }
+        public string CategoryNames { get; set; }
 
         public static LocationDetailsViewModel GetLocationDetailsViewModel(ApplicationDbContext context, int id)
         {
             LocationDetailsViewModel locationDetailsViewModel = new LocationDetailsViewModel();
-            
+
             Models.Location location = context.Locations
-                .Single(l => l.Id == id);
+                //.Include(l => l.LocationCategories)
+                .FirstOrDefault(l => l.Id == id);
+
 
             List<Models.Review> reviews = context.Reviews
             .Where(r => r.LocationID == id)
             .ToList();
 
-            IList<Models.LocationCategory> categories = location.LocationCategories;
+            //List<Models.LocationCategory> locationCategories = context.LocationCategories
+            //.Where(r => r.LocationId == id)
+            //.ToList();
+
+            //IList<Models.LocationCategory> categories = location.LocationCategories;
 
             IList<ReviewDetailsViewModel> reviewDetailsViewModels = new List<ReviewDetailsViewModel>();
             foreach (Models.Review review in reviews)
@@ -40,14 +50,23 @@ namespace StLouisSitesMVC.ViewModels.Location
 
             }
 
-            List<CategoryDetailsViewModel> categoryDetailsViewModels = new List<CategoryDetailsViewModel>();
-            foreach (Models.LocationCategory category in categories)
-            {
-                CategoryDetailsViewModel categoryDetailsViewModel = new CategoryDetailsViewModel();
-                categoryDetailsViewModel.Name = category.Category.CategoryName;
-                categoryDetailsViewModels.Add(categoryDetailsViewModel);
+            //public string GetCategoryNames(Models.Location location)
+            //{
+            //    Models.CategoryLocation categoryLocation = new Models.CategoryLocation();
+            //    string names = string.Join(",", location.CategoryLocations
+            //        .Where(cl => cl.CategoryID == cl.Category.ID)
+            //        .Select(cl => cl.Category.Name));
+            //    List<Models.Location.CategoryLocation.Category> Name = names;
+            //}
 
-            }
+            //List<CategoryDetailsViewModel> categoryDetailsViewModels = new List<CategoryDetailsViewModel>();
+            //foreach (Models.LocationCategory category in categories)
+            //{
+            //    CategoryDetailsViewModel categoryDetailsViewModel = new CategoryDetailsViewModel();
+            //    categoryDetailsViewModel.Name = category.Category.CategoryName;
+            //    categoryDetailsViewModels.Add(categoryDetailsViewModel);
+
+            //}
 
             return new LocationDetailsViewModel()
             {
@@ -55,7 +74,7 @@ namespace StLouisSitesMVC.ViewModels.Location
                 Description = location.Description,
                 Id = location.Id,
                 ReviewDetailsViewModels = reviewDetailsViewModels.ToList(),
-                CategoryDetailsViewModels =categoryDetailsViewModels
+                //CategoryDetailsViewModels = categoryDetailsViewModels.ToList()
             };
         }
     }

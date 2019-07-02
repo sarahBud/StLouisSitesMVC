@@ -17,6 +17,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Description)
             </th>
+            <td>
+                @Html.DisplayFor(modelItem => Model.CategoryNames)
+            </td>
         </tr>
     </thead>
     <tbody>
@@ -29,15 +32,7 @@
             <td>
                 @Html.DisplayFor(modelItem => Model.Description)
             </td>
-            @foreach (var item in Model.CategoryDetailsViewModels)
-            {
 
-                @Html.DisplayFor(modelItem => item.Name)
-
-            }
-
-
-        </tr>
 
 
         @*<div>
