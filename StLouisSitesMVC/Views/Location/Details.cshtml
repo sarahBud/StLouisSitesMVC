@@ -35,9 +35,9 @@
 
 
 
-        @*<div>
-                <a asp-action="Index">Back to List</a>
-            </div>*@
+            @*<div>
+                    <a asp-action="Index">Back to List</a>
+                </div>*@
 
 
 
@@ -48,19 +48,24 @@
 </table>
 
 <br />
-    <b>Ratings and Reviews</b>
+<b>Ratings and Reviews</b>
 <br />
 
 @foreach (var item in Model.ReviewDetailsViewModels)
 {
-    
-        @Html.DisplayFor(modelItem => item.Rating)
-    
+
+    <li>
+       Rating: @Html.DisplayFor(modelItem => item.Rating)
+    </li>
+    <ul>
+        <li>
+           Review: @Html.DisplayFor(modelItem => item.Comment)
+        </li>
+    </ul>
+
 }
 <br />
-@foreach (var item in Model.ReviewDetailsViewModels)
+@*@foreach (var item in Model.ReviewDetailsViewModels)
 {
-   
-        @Html.DisplayFor(modelItem => item.Comment)
-    
-}
+
+}*@
