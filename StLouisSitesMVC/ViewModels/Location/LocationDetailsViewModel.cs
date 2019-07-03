@@ -19,7 +19,7 @@ namespace StLouisSitesMVC.ViewModels.Location
         public List<LocationCategory> LocationCategories { get; set;}
         public List<ReviewDetailsViewModel> ReviewDetailsViewModels { get; set; }
         public List<CategoryDetailsViewModel> CategoryDetailsViewModels { get; set; }
-        public string CategoryNames { get; set; }
+        //public string CategoryNames { get; set; }
 
         public static LocationDetailsViewModel GetLocationDetailsViewModel(ApplicationDbContext context, int id)
         {
@@ -50,14 +50,7 @@ namespace StLouisSitesMVC.ViewModels.Location
 
             }
 
-            //public string GetCategoryNames(Models.Location location)
-            //{
-            //    Models.CategoryLocation categoryLocation = new Models.CategoryLocation();
-            //    string names = string.Join(",", location.CategoryLocations
-            //        .Where(cl => cl.CategoryID == cl.Category.ID)
-            //        .Select(cl => cl.Category.Name));
-            //    List<Models.Location.CategoryLocation.Category> Name = names;
-            //}
+
 
             //List<CategoryDetailsViewModel> categoryDetailsViewModels = new List<CategoryDetailsViewModel>();
             //foreach (Models.LocationCategory category in categories)
