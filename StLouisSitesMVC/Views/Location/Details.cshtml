@@ -32,11 +32,7 @@
             <td>
                 @Html.DisplayFor(modelItem => Model.Description)
             </td>
-            @foreach (var item in Model.CategoryDetailsViewModels)
-            {
-                @Html.DisplayFor(modelItem => item.Name)
-            }
-
+            
 
             @*<div>
             <a asp-action="Index">Back to List</a>
@@ -49,9 +45,19 @@
 
 
 </table>
-
+<h3>Selected Categories</h3>
+<ul>
+    
+        @foreach (var item in Model.CategoryDetailsViewModels)
+        {
+            <li>
+            @Html.DisplayFor(modelItem => item.Name)
+            </li>
+        }
+    
+</ul>
 <br />
-<b>Ratings and Reviews</b>
+<h3>Ratings and Reviews</h3>
 <br />
 
 @foreach (var item in Model.ReviewDetailsViewModels)
@@ -68,7 +74,3 @@
 
 }
 <br />
-@*@foreach (var item in Model.ReviewDetailsViewModels)
-{
-
-}*@
