@@ -21,22 +21,33 @@ namespace StLouisSitesMVC.ViewModels.Location
         public List<CategoryDetailsViewModel> CategoryDetailsViewModels { get; set; }
         //public string CategoryNames { get; set; }
 
-        public static LocationDetailsViewModel GetLocationDetailsViewModel(ApplicationDbContext context, int id)
+        public static LocationDetailsViewModel GetLocationDetailsViewModel(ApplicationDbContext context, int locationId)
         {
             LocationDetailsViewModel locationDetailsViewModel = new LocationDetailsViewModel();
 
             Models.Location location = context.Locations
-                //.Include(l => l.LocationCategories)
-                .FirstOrDefault(l => l.Id == id);
+                .Include(l => l.LocationCategories)
+                .FirstOrDefault(l => l.Id == locationId);
 
 
             List<Models.Review> reviews = context.Reviews
-            .Where(r => r.LocationID == id)
+            .Where(r => r.LocationID == locationId)
             .ToList();
 
-            //List<Models.LocationCategory> locationCategories = context.LocationCategories
-            //.Where(r => r.LocationId == id)
-            //.ToList();
+            var selectedCategories = context.LocationCategories
+                .Where(locationCategory => locationCategory.LocationId == locationId)
+                .ToList();
+
+            List<Category> categories = context.Categories
+            .ToList();
+            
+            selectedCategories.ForEach(selectedCategory => 
+                selectedCategory.Category = categories.Single(category => 
+                    category.Id == selectedCategory.CategoryId
+                )
+            );
+
+
 
             //IList<Models.LocationCategory> categories = location.LocationCategories;
 
@@ -52,14 +63,14 @@ namespace StLouisSitesMVC.ViewModels.Location
 
 
 
-            //List<CategoryDetailsViewModel> categoryDetailsViewModels = new List<CategoryDetailsViewModel>();
-            //foreach (Models.LocationCategory category in categories)
-            //{
-            //    CategoryDetailsViewModel categoryDetailsViewModel = new CategoryDetailsViewModel();
-            //    categoryDetailsViewModel.Name = category.Category.CategoryName;
-            //    categoryDetailsViewModels.Add(categoryDetailsViewModel);
+            List<CategoryDetailsViewModel> categoryDetailsViewModels = new List<CategoryDetailsViewModel>();
+            foreach (Models.LocationCategory selectedCategory in selectedCategories)
+            {
+                CategoryDetailsViewModel categoryDetailsViewModel = new CategoryDetailsViewModel();
+                categoryDetailsViewModel.Name = selectedCategory.Category.CategoryName;
+                categoryDetailsViewModels.Add(categoryDetailsViewModel);
 
-            //}
+            }
 
             return new LocationDetailsViewModel()
             {
@@ -67,7 +78,7 @@ namespace StLouisSitesMVC.ViewModels.Location
                 Description = location.Description,
                 Id = location.Id,
                 ReviewDetailsViewModels = reviewDetailsViewModels.ToList(),
-                //CategoryDetailsViewModels = categoryDetailsViewModels.ToList()
+                CategoryDetailsViewModels = categoryDetailsViewModels.ToList()
             };
         }
     }

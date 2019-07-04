@@ -32,17 +32,20 @@
             <td>
                 @Html.DisplayFor(modelItem => Model.Description)
             </td>
-
+            @foreach (var item in Model.CategoryDetailsViewModels)
+            {
+                @Html.DisplayFor(modelItem => item.Name)
+            }
 
 
             @*<div>
-                    <a asp-action="Index">Back to List</a>
-                </div>*@
+            <a asp-action="Index">Back to List</a>
+        </div>*@
 
 
 
 
-    </tbody>
+</tbody>
 
 
 </table>
